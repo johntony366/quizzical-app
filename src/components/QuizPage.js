@@ -4,6 +4,7 @@ import { Box } from "@mui/material";
 import QuizEntry from "./QuizEntry";
 
 const _ = require("lodash");
+const parse = require("html-react-parser");
 
 export default function QuizPage() {
   const [quizData, setQuizData] = useState([]);
@@ -37,7 +38,10 @@ export default function QuizPage() {
         if (index === questionData.index) {
           return {
             ...questionData,
-            selected_answer: e.target.textContent === questionData.selected_answer ? "" : e.target.textContent,
+            selected_answer:
+              questionData.selected_answer ? (e.target.textContent === parse(questionData.selected_answer)
+                ? ""
+                : e.target.value) : e.target.value,
           };
         } else {
           return questionData;

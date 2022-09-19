@@ -9,7 +9,7 @@ export default function StartPage({handleStartClick}) {
       flexDirection="column"
       justifyContent="center"
       alignItems="center"
-      height={"100%"}
+      minHeight="100vh"
       gap={4}
     >
       <Typography variant="h1" fontWeight={700} color="primary.dark">Quizzlet</Typography>
