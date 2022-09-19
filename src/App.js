@@ -16,6 +16,15 @@ const theme = createTheme({
   palette: {
     primary: {
       main: "#4D5B9E",
+      light: "#bdc7ff",
+    },
+    success: {
+      main: "#2e7d32",
+      light: "#89e88e",
+    },
+    warning: {
+      main: "#d65656",
+      light: "#e88989",
     },
   },
 });
@@ -40,7 +49,10 @@ function App() {
         minHeight={"100vh"}
       >
         {isGameRunning ? (
-          <QuizPage isGameRunning={isGameRunning} toggleIsGameRunning={toggleIsGameRunning} />
+          <QuizPage
+            isGameRunning={isGameRunning}
+            toggleIsGameRunning={toggleIsGameRunning}
+          />
         ) : (
           <StartPage handleStartClick={toggleIsGameRunning} />
         )}

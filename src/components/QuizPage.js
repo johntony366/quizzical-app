@@ -81,7 +81,7 @@ export default function QuizPage({ isGameRunning, toggleIsGameRunning }) {
             key={i}
             index={i}
             questionData={questionData}
-            handleOptionClick={isQuizOpen && handleOptionClick}
+            handleOptionClick={handleOptionClick}
             isQuizOpen={isQuizOpen}
           />
         );
@@ -97,8 +97,8 @@ export default function QuizPage({ isGameRunning, toggleIsGameRunning }) {
         </Button>
       ) : (
         <Box className="gameResultContainer" display="flex" justifyContent="center" alignItems="center" gap={4} marginTop={5}>
-            <Typography variant="h4">Your score is {getScore()}</Typography>
-            <Button variant="contained" sx={{fontSize: 24}}>Play again</Button>
+            <Typography variant="h4" disabled={true}>Your score is {getScore()}</Typography>
+            <Button variant="contained" sx={{fontSize: 24}} onClick={toggleIsGameRunning}>Play again</Button>
         </Box>
       )}
     </Box>
