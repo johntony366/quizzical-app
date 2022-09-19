@@ -37,7 +37,7 @@ function App() {
           backgroundRepeat: "no-repeat",
           backgroundPosition: "bottom left, top right",
         }}
-        height={"100vh"}
+        minHeight={"100vh"}
       >
         {isGameRunning ? (
           <QuizPage isGameRunning={isGameRunning} />
