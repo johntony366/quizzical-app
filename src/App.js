@@ -1,7 +1,11 @@
+import React from "react";
+import { useState } from "react";
+
 import { Box } from "@mui/material";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 
 import StartPage from "./components/StartPage";
+import QuizPage from "./components/QuizPage";
 import blueBlob from "./assets/blueBlob.svg";
 import yellowBlob from "./assets/yellowBlob.svg";
 
@@ -11,12 +15,18 @@ const theme = createTheme({
   },
   palette: {
     primary: {
-      main: "#4D5B9E"
-    }
-  }
+      main: "#4D5B9E",
+    },
+  },
 });
 
 function App() {
+  const [isGameRunning, setIsGameRunning] = useState(false);
+
+  function handleStartClick() {
+    setIsGameRunning((oldVal) => !oldVal);
+  }
+
   return (
     <ThemeProvider theme={theme}>
       <Box
@@ -27,8 +37,13 @@ function App() {
           backgroundRepeat: "no-repeat",
           backgroundPosition: "bottom left, top right",
         }}
+        height={"100vh"}
       >
-        <StartPage />
+        {isGameRunning ? (
+          <QuizPage isGameRunning={isGameRunning} />
+        ) : (
+          <StartPage handleStartClick={handleStartClick} />
+        )}
       </Box>
     </ThemeProvider>
   );

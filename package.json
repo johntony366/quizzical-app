@@ -37,5 +37,9 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "html-react-parser": "^3.0.4",
+    "lodash": "^4.17.21"
   }
 }
