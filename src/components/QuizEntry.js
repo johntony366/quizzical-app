@@ -25,7 +25,7 @@ export default function QuizEntry({ index, questionData, handleOptionClick }) {
           {questionData.shuffled_answers.map((option, i) => {
             return (
               <ToggleButton key={i} value={option}>
-                {option}
+                {parse(option)}
               </ToggleButton>
             );
           })}
