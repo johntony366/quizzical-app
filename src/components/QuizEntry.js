@@ -10,10 +10,10 @@ import {
 
 const parse = require("html-react-parser");
 
-export default function QuizEntry({ index, questionData, handleOptionClick }) {
+export default function QuizEntry({ index, questionData, handleOptionClick, isQuizOpen }) {
   return (
-    <Box className="quizEntry" sx={{ height: "100%" }}>
-      <Typography variant="h4" sx={{ color: "primary.dark" }}>
+    <Box className="quizEntryContainer" sx={{ width: "100%", height: "100%", my: 0 }}>
+      <Typography variant="h4" sx={{ color: "primary.dark", textAlign: "center" }}>
         {parse(questionData.question)}
       </Typography>
       <Box
@@ -26,7 +26,8 @@ export default function QuizEntry({ index, questionData, handleOptionClick }) {
         <ToggleButtonGroup
           exclusive
           value={questionData.selected_answer}
-          onChange={(e) => handleOptionClick(e, index)}
+          onChange={(e) => isQuizOpen && handleOptionClick(e, index)}
+          sx={{my: 2}}
         >
           {questionData.shuffled_answers.map((option, i) => {
             return (
@@ -37,7 +38,7 @@ export default function QuizEntry({ index, questionData, handleOptionClick }) {
           })}
         </ToggleButtonGroup>
       </Box>
-      <Divider />
+      <Divider sx={{my: 1}} />
     </Box>
   );
 }

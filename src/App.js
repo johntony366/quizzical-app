@@ -23,7 +23,7 @@ const theme = createTheme({
 function App() {
   const [isGameRunning, setIsGameRunning] = useState(false);
 
-  function handleStartClick() {
+  function toggleIsGameRunning() {
     setIsGameRunning((oldVal) => !oldVal);
   }
 
@@ -40,9 +40,9 @@ function App() {
         minHeight={"100vh"}
       >
         {isGameRunning ? (
-          <QuizPage isGameRunning={isGameRunning} />
+          <QuizPage isGameRunning={isGameRunning} toggleIsGameRunning={toggleIsGameRunning} />
         ) : (
-          <StartPage handleStartClick={handleStartClick} />
+          <StartPage handleStartClick={toggleIsGameRunning} />
         )}
       </Box>
     </ThemeProvider>

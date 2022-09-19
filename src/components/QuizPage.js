@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from "react";
 
-import { Box } from "@mui/material";
+import { Box, Button, Typography } from "@mui/material";
 import QuizEntry from "./QuizEntry";
 
 const _ = require("lodash");
 const parse = require("html-react-parser");
 
-export default function QuizPage() {
+export default function QuizPage({ isGameRunning, toggleIsGameRunning }) {
   const [quizData, setQuizData] = useState([]);
+  const [isQuizOpen, setIsQuizOpen] = useState(true);
 
   useEffect(() => {
     getQuiz().then((response) => {
@@ -38,16 +39,31 @@ export default function QuizPage() {
         if (index === questionData.index) {
           return {
             ...questionData,
-            selected_answer:
-              questionData.selected_answer ? (e.target.textContent === parse(questionData.selected_answer)
+            selected_answer: questionData.selected_answer
+              ? e.target.textContent === parse(questionData.selected_answer)
                 ? ""
-                : e.target.value) : e.target.value,
+                : e.target.value
+              : e.target.value,
           };
         } else {
           return questionData;
         }
       })
     );
+  }
+
+  function getScore() {
+    let score = 0;
+    quizData.forEach((questionData) => {
+      if (questionData.selected_answer === questionData.correct_answer) {
+        ++score;
+      }
+    });
+    return score;
+  }
+
+  function handleSubmit() {
+    setIsQuizOpen(false);
   }
 
   return (
@@ -65,10 +81,26 @@ export default function QuizPage() {
             key={i}
             index={i}
             questionData={questionData}
-            handleOptionClick={handleOptionClick}
+            handleOptionClick={isQuizOpen && handleOptionClick}
+            isQuizOpen={isQuizOpen}
           />
         );
       })}
+      {isQuizOpen ? (
+        <Button
+          variant="contained"
+          className="submitAnswersButton"
+          sx={{ fontSize: 32, my: 4 }}
+          onClick={handleSubmit}
+        >
+          Submit
+        </Button>
+      ) : (
+        <Box className="gameResultContainer" display="flex" justifyContent="center" alignItems="center" gap={4} marginTop={5}>
+            <Typography variant="h4">Your score is {getScore()}</Typography>
+            <Button variant="contained" sx={{fontSize: 24}}>Play again</Button>
+        </Box>
+      )}
     </Box>
   );
 }
