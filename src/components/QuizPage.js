@@ -37,7 +37,7 @@ export default function QuizPage() {
         if (index === questionData.index) {
           return {
             ...questionData,
-            selected_answer: e.target.textContent,
+            selected_answer: e.target.textContent === questionData.selected_answer ? "" : e.target.textContent,
           };
         } else {
           return questionData;
@@ -47,7 +47,14 @@ export default function QuizPage() {
   }
 
   return (
-    <Box className="quizPage" sx={{ p: 6 }}>
+    <Box
+      className="quizPage"
+      sx={{ p: 6 }}
+      display="flex"
+      flexDirection="column"
+      justifyContent="center"
+      alignItems="center"
+    >
       {quizData.map((questionData, i) => {
         return (
           <QuizEntry

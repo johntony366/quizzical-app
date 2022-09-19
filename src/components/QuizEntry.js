@@ -16,7 +16,13 @@ export default function QuizEntry({ index, questionData, handleOptionClick }) {
       <Typography variant="h4" sx={{ color: "primary.dark" }}>
         {parse(questionData.question)}
       </Typography>
-      <Box className="quizOptions">
+      <Box
+        className="quizOptions"
+        display="flex"
+        flexDirection="column"
+        justifyContent="center"
+        alignItems="center"
+      >
         <ToggleButtonGroup
           exclusive
           value={questionData.selected_answer}
