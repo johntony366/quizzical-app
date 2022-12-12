@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 
-import { Box, Button, Typography } from "@mui/material";
+import { Box, Button, CircularProgress, Typography } from "@mui/material";
 import QuizEntry from "./QuizEntry";
+import { Stack } from "@mui/system";
 
 const _ = require("lodash");
 const parse = require("html-react-parser");
@@ -28,6 +29,7 @@ export default function QuizPage({ isGameRunning, toggleIsGameRunning }) {
   }, []);
 
   function getQuiz() {
+    debugger;
     return fetch("https://opentdb.com/api.php?amount=5&type=multiple").then(
       (response) => response.json()
     );
@@ -75,32 +77,74 @@ export default function QuizPage({ isGameRunning, toggleIsGameRunning }) {
       justifyContent="center"
       alignItems="center"
     >
-      {quizData.map((questionData, i) => {
-        return (
-          <QuizEntry
-            key={i}
-            index={i}
-            questionData={questionData}
-            handleOptionClick={handleOptionClick}
-            isQuizOpen={isQuizOpen}
-          />
-        );
-      })}
-      {isQuizOpen ? (
-        <Button
-          variant="contained"
-          className="submitAnswersButton"
-          sx={{ fontSize: 32, my: 4 }}
-          onClick={handleSubmit}
-        >
-          Submit
-        </Button>
+      {quizData.length > 0 ? (
+        quizData.map((questionData, i) => {
+          return (
+            <QuizEntry
+              key={i}
+              index={i}
+              questionData={questionData}
+              handleOptionClick={handleOptionClick}
+              isQuizOpen={isQuizOpen}
+            />
+          );
+        })
       ) : (
-        <Box className="gameResultContainer" display="flex" justifyContent="center" alignItems="center" gap={4} marginTop={5}>
-            <Typography variant="h4" disabled={true}>Your score is {getScore()}</Typography>
-            <Button variant="contained" sx={{fontSize: 24}} onClick={toggleIsGameRunning}>Play again</Button>
+        <Box
+          sx={{
+            width: "100vw",
+            height: "100vh",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <Stack spacing={2}>
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <CircularProgress />
+            </Box>
+            <Typography>Loading quiz...</Typography>
+          </Stack>
         </Box>
       )}
+      {quizData.length > 0 ? (
+        isQuizOpen ? (
+          <Button
+            variant="contained"
+            className="submitAnswersButton"
+            sx={{ fontSize: 32, my: 4 }}
+            onClick={handleSubmit}
+          >
+            Submit
+          </Button>
+        ) : (
+          <Box
+            className="gameResultContainer"
+            display="flex"
+            justifyContent="center"
+            alignItems="center"
+            gap={4}
+            marginTop={5}
+          >
+            <Typography variant="h4" disabled={true}>
+              Your score is {getScore()}
+            </Typography>
+            <Button
+              variant="contained"
+              sx={{ fontSize: 24 }}
+              onClick={toggleIsGameRunning}
+            >
+              Play again
+            </Button>
+          </Box>
+        )
+      ) : null}
     </Box>
   );
 }
